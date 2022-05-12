@@ -16,6 +16,7 @@ type Mutation {
     incrementCounter: Int 
     createRoom(name: String): RoomState
     updateName(id: String, name: String): RoomState
+    createUser(roomID: String, name: String, emoji: String): User
 }
 
 type RoomState {
@@ -31,8 +32,8 @@ type Round {
 }
 
 type User {
-    name: String # unique, used as ID
-    emoji: String
+    name: String    # unique, used as ID
+    emoji: String   # unicode
 }
 
 

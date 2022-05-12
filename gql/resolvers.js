@@ -18,7 +18,7 @@ export const resolvers = {
     },
     Query: {
         counter: () => currentNumber,
-        roomState: ({id}) => {
+        roomState: (_, {id}) => {
             return rooms.find(room => room.id === id) || null
         },
         allRooms: () => {
