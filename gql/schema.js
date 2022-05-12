@@ -30,6 +30,11 @@ type Round {
     points: Int
 }
 
+type User {
+    name: String # unique, used as ID
+    emoji: String
+}
+
 
 `
 

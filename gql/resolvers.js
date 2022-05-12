@@ -2,7 +2,10 @@ import {pubsub} from "../pubsub.js";
 import { v4 as uuidv4 } from 'uuid';
 let currentNumber = 0;
 
-let rooms = []
+let rooms = [{
+    "id": "d4a351f2-a218-4fe2-9ebd-8473b6e1ec76",
+    "name": "Chad's test room"
+}]
 
 export const resolvers = {
     Subscription: {
@@ -38,8 +41,12 @@ export const resolvers = {
         },
         updateName: (_, {id, name}) => {
             const room = rooms.find(room => room.id === id)
+            if (!room) {
+                return null
+            }
             room.name = name
-            return pubsub.publish('ROOM_UPDATED', { roomUpdated: room })
+            pubsub.publish('ROOM_UPDATED', { roomUpdated: room })
+            return room
         },
     }
 
