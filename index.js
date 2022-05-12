@@ -7,6 +7,8 @@ import express from "express";
 import {schema} from "./gql/schema.js";
 import {incrementNumber} from "./tick-tock.js";
 
+const PORT = process.env.PORT || 4000
+
 // instantiate http server
 const app = express()
 const httpServer = createServer(app);
@@ -49,7 +51,7 @@ server.applyMiddleware({
 
 
 // tell the http server to start listening
-await new Promise(resolve => httpServer.listen(4000, resolve));
-console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+await new Promise(resolve => httpServer.listen(PORT, resolve));
+console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
 
 // incrementNumber();
