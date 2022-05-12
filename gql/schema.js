@@ -10,6 +10,7 @@ type Subscription {
 type Query {
   counter: Int
   roomState(id: String):  RoomState
+  allRooms: [RoomState]
 }
 type Mutation {
     incrementCounter: Int 
@@ -21,6 +22,14 @@ type RoomState {
     id: String
     name: String
 }
+
+type Round {
+    id: String
+    name: String
+    desc: String
+    points: Int
+}
+
 
 `
 

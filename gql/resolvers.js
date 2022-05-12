@@ -1,5 +1,5 @@
 import {pubsub} from "../pubsub.js";
-
+import { v4 as uuidv4 } from 'uuid';
 let currentNumber = 0;
 
 let rooms = []
@@ -15,29 +15,32 @@ export const resolvers = {
     },
     Query: {
         counter: () => currentNumber,
-        roomState: (id) => {
-            return rooms.find(room => room.id === id)
+        roomState: ({id}) => {
+            return rooms.find(room => room.id === id) || null
+        },
+        allRooms: () => {
+            return rooms
         }
     },
     Mutation: {
         incrementCounter: () => {
             currentNumber++;
-            return pubsub.publish('NUMBER_INCREMENTED', { counterChanged: currentNumber });
+            pubsub.publish('NUMBER_INCREMENTED', { counterChanged: currentNumber });
+            return currentNumber
         },
-        createRoom: (name) => {
+        createRoom: (_, { name }) => {
             const room = {
-                id: uuid.v1(),
+                id: uuidv4(),
                 name
             }
             rooms.push(room)
-            return room.id
+            return room
         },
-        updateName: (id, name) => {
+        updateName: (_, {id, name}) => {
             const room = rooms.find(room => room.id === id)
             room.name = name
-            return pubsub.publish('ROOM_UPDATED', {roomUpdated: room})
-
-        }
+            return pubsub.publish('ROOM_UPDATED', { roomUpdated: room })
+        },
     }
 
 
