@@ -25,6 +25,7 @@ type RoomState {
     name: String
     users: [User]
     currentRoundId: String
+    rounds: [Round]
 }
 
 type Round {
