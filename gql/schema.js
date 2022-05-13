@@ -4,7 +4,7 @@ import {resolvers} from "./resolvers.js";
 
 const typeDefs = gql`
 type Subscription {
-  roomUpdated: RoomState
+  roomUpdated(id: String): RoomState
 }
 type Query {
   roomState(id: String):  RoomState
@@ -25,7 +25,6 @@ type RoomState {
     name: String
     users: [User]
     currentRoundId: String
-    votes: [Vote]
 }
 
 type Round {

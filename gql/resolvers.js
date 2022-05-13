@@ -1,5 +1,6 @@
 import {pubsub} from "../pubsub.js";
 import { v4 as uuidv4 } from 'uuid';
+import {withFilter} from "graphql-subscriptions";
 let currentNumber = 0;
 
 let rooms = [{
@@ -35,7 +36,12 @@ export const resolvers = {
         //     subscribe: () => pubsub.asyncIterator([EVENT.numberIncremented])
         // },
         roomUpdated: {
-            subscribe: () => pubsub.asyncIterator([EVENT.roomUpdated])
+            subscribe: withFilter(
+                () => pubsub.asyncIterator([EVENT.roomUpdated]),
+                (payload, variables) => {
+                    return (payload.roomUpdated.id === variables.id);
+                }
+            )
         }
     },
     Query: {
