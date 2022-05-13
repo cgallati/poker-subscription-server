@@ -73,6 +73,7 @@ export const resolvers = {
             const room = getRoom(roomId)
             const round = { id: uuidv4(), name, desc }
             room.rounds.push(round)
+            room.currentRoundId = ''
             updateRoom(room)
             return round
         },
