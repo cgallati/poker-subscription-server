@@ -4,24 +4,28 @@ import {resolvers} from "./resolvers.js";
 
 const typeDefs = gql`
 type Subscription {
-  counterChanged: Int
   roomUpdated: RoomState
 }
 type Query {
-  counter: Int
   roomState(id: String):  RoomState
   allRooms: [RoomState]
 }
 type Mutation {
-    incrementCounter: Int 
     createRoom(name: String): RoomState
-    updateName(id: String, name: String): RoomState
-    createUser(roomID: String, name: String, emoji: String): User
+    updateRoomName(id: String, name: String): RoomState
+    createUser(roomId: String, name: String, emoji: String): User
+    createRound(roomId: String, name: String, desc: String): Round
+    startRound(roomId: String, id: String): String
+    endRound(roomId: String, points: Int): Round
+    vote(roomId: String, userName: String, points: Int): Int
 }
 
 type RoomState {
     id: String
     name: String
+    users: [User]
+    currentRoundId: String
+    votes: [Vote]
 }
 
 type Round {
@@ -34,6 +38,12 @@ type Round {
 type User {
     name: String    # unique, used as ID
     emoji: String   # unicode
+    vote: Int
+}
+
+type Vote {
+    user: String
+    points: Int
 }
 
 
