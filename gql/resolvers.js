@@ -12,7 +12,6 @@ let rooms = [{
 }]
 
 const EVENT = {
-    // numberIncremented: 'NUMBER_INCREMENTED',
     roomUpdated: 'ROOM_UPDATED'
 }
 
@@ -32,20 +31,14 @@ const getCurrentRound = () => {
 
 export const resolvers = {
     Subscription: {
-        // counterChanged: {
-        //     subscribe: () => pubsub.asyncIterator([EVENT.numberIncremented])
-        // },
         roomUpdated: {
             subscribe: withFilter(
                 () => pubsub.asyncIterator([EVENT.roomUpdated]),
-                (payload, variables) => {
-                    return (payload.roomUpdated.id === variables.id);
-                }
+                (payload, variables) => payload.roomUpdated.id === variables.id
             )
         }
     },
     Query: {
-        // counter: () => currentNumber,
         roomState: (_, {id}) => {
             return getRoom(id)
         },
@@ -54,11 +47,6 @@ export const resolvers = {
         }
     },
     Mutation: {
-        // incrementCounter: () => {
-        //     currentNumber++;
-        //     pubsub.publish(EVENT.numberIncremented, { counterChanged: currentNumber });
-        //     return currentNumber
-        // },
         createRoom: (_, { name }) => {
             const room = {
                 id: uuidv4(),

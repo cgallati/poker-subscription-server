@@ -31,7 +31,7 @@ type Round {
     id: String
     name: String
     desc: String
-    points: Int
+    points: Int     # updated with endRound
 }
 
 type User {
@@ -44,8 +44,6 @@ type Vote {
     user: String
     points: Int
 }
-
-
 `
 
 export const schema = makeExecutableSchema({
