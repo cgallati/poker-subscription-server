@@ -52,6 +52,7 @@ export const resolvers = {
                 id: uuidv4(),
                 name,
                 users: [],
+                rounds: []
             }
             rooms.push(room)
             return room
